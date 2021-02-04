@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加员工</title>
+    <link rel="stylesheet" href="./../../layui/css/layui.css" text="text/css">
+</head>
+<body>
+
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">员工姓名</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" required  lay-verify="required" placeholder="请输入部门" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">详细信息</label>
+        <div class="layui-input-block">
+            <textarea name="remark" id="remark" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="add-dept">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script src="./../../layui/layui.js"></script>
+<script>
+    layui.use(['form', 'jquery'], function () {
+        const form = layui.form
+            ,layer = layui.layer,
+            $ = layui.jquery
+        ;
+
+        form.on('submit(add-dept)', function (data) {
+            $.ajax({
+                url: '/dept',
+                method: 'POST',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
+                success: function (data) {
+                    layer.alter(JSON.stringify(data), {})
+                    return false
+                }
+            })
+            return false
+        })
+
+    })
+</script>
+</body>
+</html>
