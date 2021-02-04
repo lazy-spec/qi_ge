@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.person.qi_boot.dao.DeptDao">
+
+    <insert id="save" keyProperty="id" useGeneratedKeys="true">
+        insert into dept(`name`, remark)
+        values (#{name}, #{remark})
+    </insert>
+    <update id="updateInfoById">
+        update dept
+        <set>
+            <if test="name!=null">
+                name = #{name},
+            </if>
+            <if test="remark!=null">
+                remark = #{remark},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

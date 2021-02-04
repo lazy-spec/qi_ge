@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link href="./layui/css/layui.css" rel="stylesheet" text="text/css">
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            width: 100%;
+            height: 100%;
+            background-color: #bfa;
+        }
+        .login-form {
+            width: 500px;
+            margin: 0 auto;
+            margin-top: 100px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<form class="layui-form login-form" action="#">
+    <div class="layui-form-item">
+        <label class="layui-form-label" for="uId">工号:</label>
+        <div class="layui-input-block">
+            <input type="text" name="uId" id="uId" autocomplete="off" placeholder="uId" class="layui-input" />
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" for="password">密码:</label>
+        <div class="layui-input-block">
+            <input type="text" name="password" id="password" autocomplete="off" placeholder="Password" class="layui-input" />
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label for="roleId" class="layui-form-label">身份</label>
+        <div class="layui-input-block">
+            <select name="roleId" id="roleId" lay-verify="required">
+                <option value="">请选择你登录的身份</option>
+                <option value="1">管理员</option>
+                <option value="2">普通用户</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="login-btn">登录</button>
+            <button class="layui-btn layui-btn-primary">忘记密码</button>
+        </div>
+    </div>
+</form>
+
+<script src="./layui/layui.js"></script>
+<script>
+    layui.use(['form'], function () {
+        const form = layui.form
+            ,layer = layui.layer
+        ;
+
+        form.verify({
+            uId: function (value) {
+                if (value.length < 0) {
+                    return '请输入你的工号'
+                }
+            },
+            password: function (value) {
+                /^[\S]{1,12}$/
+            }
+        })
+
+        form.on('submit(login-btn)', function (data) {
+            layer.alert(JSON.stringify(data.field), {
+                title: '登录成功'
+            })
+            window.location.href = '/index.html'
+            // return false
+        })
+
+    })
+</script>
+
+</body>
+</html>
