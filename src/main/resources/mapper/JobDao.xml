@@ -5,17 +5,17 @@
 
 
     <insert id="save" keyProperty="id" useGeneratedKeys="true">
-        insert into `job`(username, password, status, created_time)
-        values (${username}, #{password}, #{status}, now())
+        insert into `job`(`name`, remark)
+        values (#{name}, #{remark})
     </insert>
     <update id="updateById">
         update `job`
         <set>
-            <if test="password!=null">
-                password = #{password},
+            <if test="name!=null">
+                name = #{name},
             </if>
-            <if test="status!=null">
-                status = #{status},
+            <if test="remark!=null">
+                remark = #{remark},
             </if>
         </set>
         where id = #{id}

@@ -22,7 +22,7 @@
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit lay-filter="add-dept">立即提交</button>
+            <button class="layui-btn" lay-submit lay-filter="add-job">立即提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
@@ -36,15 +36,16 @@
             $ = layui.jquery
         ;
 
-        form.on('submit(add-dept)', function (data) {
+        form.on('submit(add-job)', function (data) {
             $.ajax({
-                url: '/dept',
+                url: '/job',
                 method: 'POST',
                 data: JSON.stringify(data.field),
                 dataType: 'json',
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
-                    layer.alter(JSON.stringify(data), {})
+                    console.log(data)
+                    // layer.alter(JSON.stringify(data), {})
                     return false
                 }
             })

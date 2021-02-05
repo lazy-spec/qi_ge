@@ -38,17 +38,15 @@
 
         form.on('submit(add-dept)', function (data) {
             $.ajax({
-                url: '/dept',
+                url: '/dept?' + new Date().getMilliseconds(),
                 method: 'POST',
                 data: JSON.stringify(data.field),
                 dataType: 'json',
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
                     layer.alter(JSON.stringify(data), {})
-                    return false
                 }
             })
-            return false
         })
 
     })
