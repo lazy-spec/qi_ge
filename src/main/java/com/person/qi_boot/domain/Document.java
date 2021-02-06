@@ -13,7 +13,7 @@ public class Document implements Serializable {
     private String filename;
     private String remark;
     private Date createdTime;
-    private Integer userId;
+    private Integer empId;
+    private String empName;
     private MultipartFile file;
-    private User user;
 }

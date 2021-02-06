@@ -96,7 +96,7 @@
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit lay-filter="add-dept">立即提交</button>
+            <button class="layui-btn" lay-submit lay-filter="add-employee">立即提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
@@ -116,9 +116,9 @@
             value: '2000-01-01'
         });
 
-        form.on('submit(add-dept)', function (data) {
+        form.on('submit(add-employee)', function (data) {
             $.ajax({
-                url: '/dept',
+                url: '/employee',
                 method: 'POST',
                 data: JSON.stringify(data.field),
                 dataType: 'json',
