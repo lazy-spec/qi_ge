@@ -5,17 +5,17 @@
 
 
     <insert id="save" keyProperty="id" useGeneratedKeys="true">
-        insert into document(username, password, status, created_time)
-        values (${username}, #{password}, #{status}, now())
+        insert into document(emp_id, title, filename, remark, created_time)
+        values (#{empId}, #{title}, #{filename}, #{remark}, now())
     </insert>
     <update id="updateInfoById">
         update document
         <set>
-            <if test="password!=null">
-                password = #{password},
+            <if test="title!=null">
+                title = #{title},
             </if>
-            <if test="status!=null">
-                status = #{status},
+            <if test="remark!=null">
+                remark = #{remark},
             </if>
         </set>
         where id = #{id}
