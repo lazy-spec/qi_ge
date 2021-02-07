@@ -12,6 +12,6 @@ public class Notice implements Serializable {
     private String title;
     private String content;
     private Date createdTime;
-    private Integer userId;
-    private User user;
+    private Integer empId;
+    private Employee employee;
 }

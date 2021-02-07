@@ -5,17 +5,17 @@
 
 
     <insert id="save" keyProperty="id" useGeneratedKeys="true">
-        insert into `notice`(username, password, status, created_time)
-        values (${username}, #{password}, #{status}, now())
+        insert into `notice`(title, content, emp_id, created_time)
+        values (${title}, #{content}, #{empId}, now())
     </insert>
     <update id="updateById">
         update `notice`
         <set>
-            <if test="password!=null">
-                password = #{password},
+            <if test="title!=null">
+                title = #{title},
             </if>
             <if test="status!=null">
-                status = #{status},
+                content = #{content},
             </if>
         </set>
         where id = #{id}
