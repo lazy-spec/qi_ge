@@ -15,8 +15,10 @@
 
 <script th:src="@{/layui/layui.js}"></script>
 <script type="text/javascript" th:inline="none">
-    layui.use('table', function(){
-        var table = layui.table;
+    layui.use(['table', 'jquery'], function(){
+        var table = layui.table
+            , $ = layui.jquery
+        ;
 
         table.render({
             elem: '#test'
@@ -57,7 +59,7 @@
         $("body").bind("keydown", function (event) {
             if (event.keyCode == 116) {
                 event.preventDefault(); //阻止默认刷新
-                //location.reload();
+                // location.reload();
                 //采用location.reload()在火狐下可能会有问题，火狐会保留上一次链接
                 location = location;
             }

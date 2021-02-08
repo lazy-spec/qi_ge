@@ -14,9 +14,10 @@
 
 <script th:src="@{/layui/layui.js}"></script>
 <script type="text/javascript" th:inline="none">
-    layui.use(['table', 'layer'], function () {
+    layui.use(['table', 'layer', 'jquery'], function () {
         const table = layui.table
             , layer = layui.layer
+            , $ = layui.jquery
         ;
         table.render({
             elem: '#documents'
