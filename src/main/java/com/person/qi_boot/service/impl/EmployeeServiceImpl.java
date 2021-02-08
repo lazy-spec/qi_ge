@@ -45,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee login(String username, String password) {
-        return employeeDao.login(username, password);
+    public Employee login(String cardId, String password, Integer roleId) {
+        return employeeDao.login(cardId, password, roleId);
     }
 }

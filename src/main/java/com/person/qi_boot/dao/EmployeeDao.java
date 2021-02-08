@@ -27,7 +27,7 @@ public interface EmployeeDao {
     @Delete(" delete from employee where id = #{id} ")
     void deleteById(Integer id);
 
-    @Select("select * from employee where name=#{name} and password=#{password}")
-    Employee login(@Param("name") String name, @Param("password") String password);
+    @Select("select * from employee where card_id=#{cardId} and password=#{password} and role_id = #{roleId}")
+    Employee login(@Param("cardId") String cardId, @Param("password") String password, @Param("roleId") Integer roleId);
 
 }

@@ -1,7 +1,8 @@
 package com.person.qi_boot.interceptor;
 
 
-import com.person.qi_boot.domain.User;
+import com.person.qi_boot.consts.Const;
+import com.person.qi_boot.domain.Employee;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -11,10 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthorizedInterceptor implements HandlerInterceptor {
 
     /** 定义不需要拦截的请求 */
-    private static final String[] IGNORE_URI = {"/loginForm", "/login","/404.html"};
-    public static final String USER_SESSION = "user_session";
-    public static final String LOGIN = "loginForm";
-
+    private static final String[] IGNORE_URI = {"/login","/404.html", "/layui/**", "/employee/login"};
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
@@ -34,12 +32,11 @@ public class AuthorizedInterceptor implements HandlerInterceptor {
         /** 拦截请求 */
         if (!flag){
             /** 1.获取session中的用户  */
-            User user = (User) request.getSession().getAttribute(USER_SESSION);
+            Employee employee = (Employee) request.getSession().getAttribute(Const.EMP_SESSION);
             /** 2.判断用户是否已经登录 */
-            if(user == null){
+            if(employee == null){
                 /** 如果用户没有登录，跳转到登录页面 */
-                request.setAttribute("message", "请先登录再访问网站!");
-                request.getRequestDispatcher(LOGIN).forward(request, response);
+                response.sendRedirect(Const.LOGIN);
                 return flag;
             }else{
                 flag = true;

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>考勤</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<form action="" class="layui-form">
+    <div class="layui-form-item">
+        <label for="remark" class="layui-form-label">原因</label>
+        <div class="layui-input-block">
+            <input type="text" name="remark" id="remark" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-input-block">
+        <button class="layui-btn" lay-submit lay-filter="addIn">打卡</button>
+        <button class="layui-btn" lay-submit lay-filter="upOut">签退</button>
+    </div>
+</form>
+
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+<script th:inline="none">
+    layui.use(['form', 'jquery', 'layer'], function () {
+        const form = layui.form
+            , $ = layui.jquery
+            , layer = layui.layer
+            ;
+        form.on('submit(addIn)', function (data) {
+            $.ajax({
+                url: '/punch/add',
+                method: 'POST',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
+                success: function (data) {
+                    layer.msg(data.msg)
+                }
+            })
+            return false
+        });
+
+        form.on('submit(upOut)', function (data) {
+            $.ajax({
+                url: '/punch/update',
+                method: 'PUT',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8',
+                success: function (data) {
+                    layer.msg(data.msg)
+                }
+            })
+            return false
+        })
+
+    })
+</script>
+
+</body>
+</html>

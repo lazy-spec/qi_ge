@@ -34,4 +34,7 @@ public class Employee implements Serializable {
     private Date createdTime;
     private String password;
 
+    /** 1:用户管理员, 2: 普通用户 */
+    private Integer roleId;
+
 }

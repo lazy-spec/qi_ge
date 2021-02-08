@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>下载中心</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+</head>
+<body>
+<table id="documents" lay-filter="document"></table>
+
+<script th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" th:inline="none">
+    layui.use(['table', 'layer'], function () {
+        const table = layui.table
+            , layer = layui.layer
+        ;
+        table.render({
+            elem: '#documents'
+            , url: '/document/list'
+            , page: false
+            , parseData: function (res) {
+                console.log(res)
+                return {
+                    "code": res.code,
+                    "msg": res.msg,
+                    "data": res.data.documents,
+                    "count": res.data.documents.length
+
+                }
+            }
+            , response: {
+                statusName: 'code',
+                statusCode: 200,
+                msgName: 'msg',
+                dataName: 'data'
+            }
+            , cols: [[
+                {field: 'id', title: 'ID', sort: true, align: 'center', fixed: 'left'}
+                , {field: 'title', title: '标题', align: 'center'}
+                , {field: 'filename', title: '文件名', align: 'center'}
+                , {field: 'remark', title: '描述', align: 'center'}
+                , {field: 'empName', title: '操作用户', align: 'center'}
+                , {field: 'createdTime', title: '创建时间', align: 'center'}
+            ]]
+        })
+    })
+</script>
+</body>
+</html>

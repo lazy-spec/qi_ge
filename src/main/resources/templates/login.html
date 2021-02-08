@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>登录</title>
-    <link href="./layui/css/layui.css" rel="stylesheet" text="text/css">
+    <link th:href="@{layui/css/layui.css}" rel="stylesheet" text="text/css">
     <style type="text/css">
         * {
             padding: 0;
@@ -26,15 +26,15 @@
 
 <form class="layui-form login-form" action="#">
     <div class="layui-form-item">
-        <label class="layui-form-label" for="uId">工号:</label>
+        <label class="layui-form-label" for="cardId">工号:</label>
         <div class="layui-input-block">
-            <input type="text" name="uId" id="uId" autocomplete="off" placeholder="uId" class="layui-input" />
+            <input type="text" th:value="22623" name="cardId" id="cardId" autocomplete="off" placeholder="cardId" class="layui-input" />
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label" for="password">密码:</label>
         <div class="layui-input-block">
-            <input type="password" name="password" id="password" autocomplete="off" placeholder="Password" class="layui-input" />
+            <input type="password" th:value="123456" name="password" id="password" autocomplete="off" placeholder="Password" class="layui-input" />
         </div>
     </div>
     <div class="layui-form-item">
@@ -55,11 +55,12 @@
     </div>
 </form>
 
-<script src="./layui/layui.js"></script>
-<script>
-    layui.use(['form', 'jquery'], function () {
+<script th:src="@{/layui/layui.js}"></script>
+<script th:inline="none">
+    layui.use(['form', 'jquery', 'layer'], function () {
         const form = layui.form
             , $ = layui.jquery
+            , layer = layui.layer
         ;
 
         form.verify({
@@ -74,16 +75,22 @@
         })
 
         form.on('submit(login-btn)', function (data) {
-            layer.msg(JSON.stringify(data.field))
             $.ajax({
                 url: '/employee/login',
                 method: 'POST',
-                data: data.field,
+                data: JSON.stringify(data.field),
                 dataType: 'json',
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
-                    layer.msg(JSON.stringify(data))
-                    window.location.href = '/index.html'
+                    if (data.code === 200) {
+                        layer.msg(JSON.stringify(data))
+                        localStorage.setItem("empId", data.data.employee.id)
+                        window.location.href = '/'
+                    } else {
+                        layer.msg(data.msg, {
+                            time: 2000
+                        })
+                    }
                 }
             })
             return false

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>考勤</title>
+    <link rel="stylesheet" href="./../../layui/css/layui.css"  media="all">
+</head>
+<body>
+
+<form action="" class="layui-form">
+    <div class="layui-input-block">
+        <button class="layui-btn" lay-submit lay-filter="addIn">打卡</button>
+        <button class="layui-btn" lay-submit lay-filter="upOut">签退</button>
+    </div>
+</form>
+
+<script src="./../../layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        const form = layui.form
+            ;
+        form.on('submit(addIn)', function (data) {
+            layer.msg(JSON.stringify(data.field))
+            return false
+        });
+
+        form.on('submit(upOut)', function (data) {
+            layer.msg(JSON.stringify(data.field))
+            return false
+        })
+
+    })
+</script>
+
+</body>
+</html>

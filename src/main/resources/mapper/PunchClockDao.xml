@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.person.qi_boot.dao.PunchClockDao">
+    <update id="upOut">
+        update punch_clock
+        set punch_out_time = now()
+        where emp_id = #{empId}
+    </update>
+    <select id="selectAll" resultType="com.person.qi_boot.domain.PunchClock">
+        select * from punch_clock
+    </select>
+    <select id="countNoUp" resultType="java.lang.Integer">
+        select count(*) from punch_clock
+        where emp_id = #{empId} and punch_out_time is null
+    </select>
+    <select id="countNoAdd" resultType="java.lang.Integer">
+        select count(*) from punch_clock
+        where emp_id = #{empId} and punch_in_time is null
+    </select>
+    <select id="selectByEmpId" resultType="com.person.qi_boot.domain.PunchClock">
+        select * from punch_clock
+        where emp_id = #{empId} and punch_in_time &gt; #{start} and punch_in_time &lt; #{end}
+    </select>
+
+    <insert id="addIn">
+        insert into punch_clock(emp_id,punch_in_time,remark, ip)
+        values (#{empId}, now(), #{remark}, #{ip})
+    </insert>
+
+</mapper>

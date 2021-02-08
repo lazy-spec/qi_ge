@@ -13,6 +13,6 @@ public interface EmployeeService {
     void updateEmployeeInfo(Employee employee);
     void insertEmployeeInfo(Employee employee);
     void deletedById(Integer id);
-    Employee login(String username, String password);
+    Employee login(String cardId, String password, Integer roleId);
 
 }

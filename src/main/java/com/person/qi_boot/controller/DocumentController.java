@@ -1,7 +1,7 @@
 package com.person.qi_boot.controller;
 
 import com.person.qi_boot.consts.AjaxResult;
-import com.person.qi_boot.consts.FileConst;
+import com.person.qi_boot.consts.Const;
 import com.person.qi_boot.domain.Document;
 import com.person.qi_boot.domain.Employee;
 import com.person.qi_boot.service.DocumentService;
@@ -10,10 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -39,11 +37,11 @@ public class DocumentController {
         try {
             String uuidFile = UUID.randomUUID().toString().replace("-","") +
                     filename.substring(filename.lastIndexOf("."));
-            File parentFile = new File(FileConst.path_url);
+            File parentFile = new File(Const.path_url);
             if (!parentFile.exists()) {
                 parentFile.mkdirs();
             }
-            String targetFilename = FileConst.path_url + uuidFile;
+            String targetFilename = Const.path_url + uuidFile;
             Document document = new Document();
             document.setEmpId(Integer.parseInt(empId));
             Employee employee = employeeService.getEmployeeInfo(Integer.parseInt(empId));
