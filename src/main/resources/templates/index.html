@@ -34,44 +34,49 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">员工管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">员工列表</a></dd>
-                        <dd><a href="javascript:;">添加员工</a></dd>
+                        <dd><a href="javascript:;" class="site-active" data-id="1" data-title="员工列表" data-url="/employee/index">员工列表</a></dd>
+                        <dd><a href="javascript:;" class="site-active" data-id="2" data-title="添加员工" data-url="/employee/add">添加员工</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">部门管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">部门列表</a></dd>
-                        <dd><a href="javascript:;">添加部门</a></dd>
+                        <dd><a href="javascript:;" class="site-active" data-id="3" data-title="部门列表" data-url="/dept/index">部门列表</a></dd>
+                        <dd><a href="javascript:;" class="site-active" data-id="4" data-title="添加部门" data-url="/dept/add">添加部门</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">职位管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">职位列表</a></dd>
-                        <dd><a href="javascript:;">添加职位</a></dd>
+                        <dd><a href="javascript:;" class="site-active" data-id="5" data-title="职位列表" data-url="/position/index">职位列表</a></dd>
+                        <dd><a href="javascript:;" class="site-active" data-id="6" data-title="添加职位" data-url="/position/add">添加职位</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">考勤管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">考勤列表</a></dd>
+                        <dd><a href="javascript:;" class="site-active" data-id="7" data-title="考勤列表" data-url="/attendance/index">考勤列表</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">下载中心</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">文档查询</a></dd>
-                        <dd><a href="javascript:;">上传文件</a></dd>
+                        <dd><a href="javascript:;" class="site-active" data-id="8" data-title="文档查询" data-url="/downloadcenter/index">文档查询</a></dd>
+                        <dd><a href="javascript:;" class="site-active" data-id="9" data-title="上传文件" data-url="/downloadcenter/add">上传文件</a></dd>
                     </dl>
                 </li>
             </ul>
         </div>
     </div>
 
-    <div class="layui-body">
-        <div style="padding: 15px;">内容主体区域</div>
+    <div class="layui-tab" lay-filter="demo" lay-allowclose="true" style="margin-left: 200px;">
+        <ul class="layui-tab-title"></ul>
+        <div class="layui-tab-content"></div>
     </div>
+
+    <!--<div class="layui-body">-->
+        <!--<iframe frameborder="0" src="/attendance" id="content" style="width: 100%;height: 100%"></iframe>-->
+    <!--</div>-->
 
     <div class="layui-footer">
         © 王奇,版权所有
@@ -86,6 +91,70 @@
             , $ = layui.jquery
             , layer = layui.layer
         ;
+
+        $("body").bind("keydown", function (event) {
+            if (event.keyCode == 116) {
+                event.preventDefault(); //阻止默认刷新
+                //location.reload();
+                //采用location.reload()在火狐下可能会有问题，火狐会保留上一次链接
+                location = location;
+            }
+        })
+
+        $(document).keydown(function (event) {
+            if (event.keyCode == 116) {
+                event.preventDefault(); //组织默认刷新
+                $('#content').attr('src', window.frames['content'].src)
+            }
+        })
+
+        $('.site-active').on('click', function () {
+            const dataid = $(this)
+            if ($(".layui-tab-title li[lay-id]").length <= 0) {
+                //如果比零小，则直接打开新的tab项
+                active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id"), dataid.attr("data-title"));
+            } else {
+                //否则判断该tab项是否以及存在
+                var isData = false; //初始化一个标志，为false说明未打开该tab项 为true则说明已有
+                $.each($(".layui-tab-title li[lay-id]"), function () {
+                    //如果点击左侧菜单栏所传入的id 在右侧tab项中的lay-id属性可以找到，则说明该tab项已经打开
+                    if ($(this).attr("lay-id") == dataid.attr("data-id")) {
+                        isData = true;
+                    }
+                })
+                if (isData == false) {
+                    //标志为false 新增一个tab项
+                    active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id"), dataid.attr("data-title"));
+                }
+            }
+            //最后不管是否新增tab，最后都转到要打开的选项页面上
+            active.tabChange(dataid.attr("data-id"));
+        });
+
+        const active = {
+            //在这里给active绑定几项事件，后面可通过active调用这些事件
+            tabAdd: function (url, id, name) {
+                //新增一个Tab项 传入三个参数，分别对应其标题，tab页面的地址，还有一个规定的id，是标签中data-id的属性值
+                //关于tabAdd的方法所传入的参数可看layui的开发文档中基础方法部分
+                element.tabAdd('demo', {
+                    title: name,
+                    content: '<iframe data-frameid="' + id + '" scrolling="auto" id="content" frameborder="0" src="' + url + '" style="width:100%;height:99%;"></iframe>',
+                    id: id //规定好的id
+                })
+                FrameWH();  //计算ifram层的大小
+            },
+            tabChange: function (id) {
+                //切换到指定Tab项
+                element.tabChange('demo', id); //根据传入的id传入到指定的tab项
+            },
+            tabDelete: function (id) {
+                element.tabDelete("demo", id);//删除
+            }
+        };
+        function FrameWH() {
+            var h = $(window).height();
+            $("iframe").css("height",h+"px");
+        }
 
         $('.logout').click(function () {
             $.ajax({
