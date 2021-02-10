@@ -14,7 +14,8 @@
 
 
 <script th:src="@{/layui/layui.js}"></script>
-<script type="text/html" id="barDemo">
+<script th:src="@{/js/common.js}"></script>
+<script type="text/html" id="job_group">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
@@ -46,7 +47,7 @@
                 {field:'id', align: 'center', fixed: 'left', title: 'id', sort: true}
                 ,{field:'name', align: 'center', title: '职位名称'}
                 ,{field:'remark', align: 'center', title: '职位描述'}
-                ,{align: 'center', title: '操作', toolbar: '#barDemo', fixed: 'right'}
+                ,{align: 'center', title: '操作', toolbar: '#job_group', fixed: 'right'}
             ]]
         })
 
@@ -71,11 +72,7 @@
                 // 2.将数据渲染到页面中
                 // 3.按钮(取消:隐藏页面;确认:调用更新接口,隐藏页面)
             } else if (event === 'del') {
-                layer.confirm('真的删除行么', function(index){
-                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                    layer.close(index);
-                    //向服务端发送删除指令
-                });
+                deleteFun('/job/' + data.id, layer, $, obj)
             } else {
                 return false
             }

@@ -10,14 +10,20 @@
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}"  media="all">
 </head>
 <body>
-<table class="layui-hide" id="test"></table>
+<table class="layui-table" id="test" lay-size="sm" lay-filter="emp"></table>
 
 
 <script th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/js/common.js}"></script>
+<script type="text/html" id="emp_group">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
 <script type="text/javascript" th:inline="none">
-    layui.use(['table', 'jquery'], function(){
+    layui.use(['table', 'jquery', 'layer'], function(){
         var table = layui.table
             , $ = layui.jquery
+            , layer = layui.layer
         ;
 
         table.render({
@@ -44,17 +50,35 @@
                 ,{field:'name', align: 'center', title: '姓名'}
                 ,{field:'tel', align: 'center', title: '手机号'}
                 ,{field:'email', align: 'center', title: '邮箱'}
-                ,{field:'education', align: 'center', title: '教育背景'}
-                ,{field:'speciality', align: 'center', title: '专业'}
-                ,{field:'sex', align: 'center', title: '性别'}
-                ,{field:'party', align: 'center', title: '身份'}
-                ,{field:'race', align: 'center', title: '族'}
+                ,{field:'education', width: 80, align: 'center', title: '教育背景'}
+                ,{field:'sex', width: 70, align: 'center', title: '性别', templet: function (d) {
+                        if (d.sex === 0) {
+                            return '男'
+                        } else if (d.sex === 1) {
+                            return '女'
+                        } else {
+                            return '保密'
+                        }
+                    }}
                 ,{field:'birthday', align: 'center', title: '生日'}
                 ,{field:'address', align: 'center', title: '地址'}
                 ,{field:'remark', align: 'center', title: '备注'}
+                ,{align: 'center', title: '操作', toolbar: '#emp_group', fixed: 'right'}
             ]]
         });
 
+        table.on('tool(emp)', function (obj) {
+            const data = obj.data
+                ,event = obj.event
+
+            if (event === 'edit') {
+
+            } else if (event === 'del') {
+                deleteFun('/employee/' + data.id, layer, $, obj)
+            } else {
+                return false
+            }
+        })
 
         $("body").bind("keydown", function (event) {
             if (event.keyCode == 116) {

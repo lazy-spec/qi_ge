@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthorizedInterceptor implements HandlerInterceptor {
 
     /** 定义不需要拦截的请求 */
-    private static final String[] IGNORE_URI = {"/login","/404.html", "/layui/**", "/employee/login"};
+    private static final String[] IGNORE_URI = {"/login","/404.html", "/layui/**", "/employee/login", "/js/**", "/css/**"};
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
