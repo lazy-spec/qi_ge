@@ -15,28 +15,6 @@
 
 <script th:src="@{/layui/layui.js}"></script>
 <script th:src="@{/js/common.js}"></script>
-<script type="text/html" id="form">
-    <form class="layui-form" action="">
-        <div class="layui-form-item">
-            <label class="layui-form-label">部门名称</label>
-            <div class="layui-input-block">
-                <input type="text" name="name" required  lay-verify="required" placeholder="请输入部门" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">详细信息</label>
-            <div class="layui-input-block">
-                <textarea name="remark" id="remark" class="layui-textarea"></textarea>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="add-dept">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            </div>
-        </div>
-    </form>
-</script>
 <script type="text/html" id="dept_group">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
@@ -92,17 +70,7 @@
                 ,event = obj.event
 
             if (event === 'edit') {
-                layer.open({
-                    type: 2,
-                    title: '编辑部门',
-                    offset: 'auto',
-                    id: new Date(),
-                    area: ['500px', '300px'],
-                    content: ['/dept/edit', 'no'],
-                    success: function (layero, index) {
-                        console.log(layero)
-                    }
-                })
+                // todo
             } else if (event === 'del') {
                 deleteFun('/dept/' + data.id, layer, $, obj)
             } else {
